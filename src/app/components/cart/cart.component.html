@@ -1,0 +1,78 @@
+<ng-container *ngIf="books.length >=1">
+    <div class="container">
+        <div class="card-table">
+            <div class="cart-product">
+                <table class="table table-responsive">
+                    <thead>
+                        <tr class="style">
+                            <th style="font-size: 30px; color: white;">Cart Items</th>
+                            <th colspan="5"></th>
+                            <th><button (click)="emptyCart()" class="btn btn-warning">Clear Cart</button></th>
+                        </tr>
+
+
+                        <tr style="text-align: center;">
+                            <th> Sr.No</th>
+                            <th> Image</th>
+                            <th> Tittle</th>
+                            <th> Price</th>
+                            <th>Quantity</th>
+                            <th>Total</th>
+                            <th>Delete</th>
+
+                        </tr>
+                    </thead>
+                    <tbody style="text-align: center;">
+                        <tr  *ngFor="let item of books; let i = index">
+                            <td>{{i+1}}</td>
+                            <td><img style="width: 20%;
+                                overflow: hidden;
+                            position: relative" src="https://bookcart.azurewebsites.net/upload/{{item.coverFileName}}" alt=""></td>
+                                <td><a routerLink="/book-details">{{item.title}}</a></td>
+                            <td> ₹ {{item.price}}</td>
+                            <td>
+                                <button [disabled]="item.quantity < 2 ? true : false" type="button" class="sub" (click)="dec(item)"><i
+                                        class="fa fa-minus"></i></button>
+                                {{item.quantity}}
+                                <button type="button" class="add" (click)="inc(item)"><i
+                                        class="fa fa-plus"></i></button>
+                            </td>
+                            <td>₹{{item.quantity * item.price | number}}</td>
+                            <td>
+                                <button (click)="removeItem(item)" class="btn btn-danger"><i
+                                        class="fas fa-trash-alt"></i></button>
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td colspan="3"></td>
+                            <td><button routerLink="/books" class="btn btn-primary">Shop More</button></td>
+                            <td>Cart Total:</td>
+                            <td> ₹ {{grandTotal}}</td>
+                            <td><button routerLink="/login" class="btn btn-danger">CheckOut</button></td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</ng-container>
+
+
+
+
+
+<ng-container *ngIf="books.length == 0">
+    <div class="container">
+        <div class="card">
+            <h5 class="size">Cart items</h5>
+        </div>
+        <div class="center">
+            <h6>Shopping cart is empty</h6>
+            <button routerLink="/books" type="button" class="btn btn-primary btn-xs">Continue Shopping</button>
+        </div>
+
+    </div>
+</ng-container>
